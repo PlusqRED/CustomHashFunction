@@ -10,17 +10,18 @@ public class CustomHash {
     public static String getHash(String input, int hashSize) {
         int hashsz = hashSize + 1;
         char[] chars = input.toCharArray();
-        long result = 0, firstSeed = 1, a = 1;
+        random.setSeed(chars[0]);
+        long a = random.nextLong();
+        random.setSeed(chars[chars.length - 1]);
+        long result = random.nextLong();
         for (char aChar : chars) {
             result += aChar * a;
-            firstSeed *= aChar;
-            random.setSeed(firstSeed);
-            a += aChar + random.nextLong();
+            a += aChar;
         }
         random.setSeed(result);
+        random.setSeed(random.nextLong());
         StringBuilder output = new StringBuilder(hashSize);
         for (int i = 1; i < hashsz; ++i) {
-            random.setSeed(random.nextLong());
             output.append(alphabet.charAt(random.nextInt(62)));
         }
         return output.toString();
