@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.Random;
 
 public class CustomHash {
@@ -14,14 +15,14 @@ public class CustomHash {
             result += aChar * a;
             firstSeed *= aChar;
             random.setSeed(firstSeed);
-            a += aChar + random.nextInt();
+            a += aChar + random.nextLong();
         }
         random.setSeed(result);
         long hash = random.nextLong();
         StringBuilder output = new StringBuilder(hashSize);
         for (int i = 1; i < hashsz; ++i) {
             random.setSeed(hash + i);
-            output.append(returnSymbol(hash + random.nextInt()));
+            output.append(returnSymbol(hash + random.nextLong()));
         }
         return output.toString();
     }
